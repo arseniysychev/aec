@@ -6,11 +6,10 @@ from .serializers import DictionarySerializer
 from .models import Dictionary
 
 
-class DictionaryViewSet(viewsets.ViewSet):
+class VocabularyViewSet(viewsets.ViewSet):
     queryset = Dictionary.objects.all()
 
     def list(self, request):
-        del request.session['released']
         serializer = DictionarySerializer(self.queryset, many=True)
         return Response(serializer.data)
 
@@ -20,10 +19,14 @@ class DictionaryViewSet(viewsets.ViewSet):
     @list_route(methods=['get'], url_path='random')
     def random_word(self, request):
         if 'released' in request.session:
-            print request.session['released']
             self.queryset = self.queryset.exclude(
                 pk__in=request.session['released']
             )
+
+        if 'lib' in request.query_params:
+            libs = request.query_params.getlist('lib')
+            self.queryset = self.queryset.filter(library__in=libs)
+
         ids = self.queryset.values_list('id', flat=True)
         random_item = Dictionary.objects.random_item(ids)
         if random_item:
@@ -36,5 +39,6 @@ class DictionaryViewSet(viewsets.ViewSet):
             serializer = DictionarySerializer(random_item)
             return Response(serializer.data)
         else:
-            del request.session['released']
+            if 'released' in request.session:
+                del request.session['released']
             return Response(status=204)
