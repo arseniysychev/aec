@@ -52,6 +52,7 @@ class Command(BaseCommand):
                 vocabulary_item = DictionarySerializer(data=row)
                 if vocabulary_item.is_valid():
                     vocabulary_item.save()
+                    self.print_info('{word}', row)
                 else:
                     self.print_info('word - {word}\nerror - {error}', dict(
                         word=row['word'],
