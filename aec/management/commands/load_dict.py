@@ -1,6 +1,8 @@
+import os
 import csv
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 
 from aec.apps.vocabulary.serializers import DictionarySerializer
 
@@ -21,6 +23,11 @@ class Command(BaseCommand):
             dest='print',
             help='Print info.'
         )
+        parser.add_argument(
+            '-f', '--file',
+            dest='file',
+            help='File for load to db.'
+        )
 
     def print_info(self, template='', context=None):
         if self.input_options['print']:
@@ -28,8 +35,17 @@ class Command(BaseCommand):
             print str(template).format(**context)
 
     def handle(self, *args, **options):
+        if not options['file']:
+            raise CommandError("Option `--file=...` must be specified.")
+
+        file_path = os.path.join(settings.BASE_DIR,
+                                 'data/{f}'.format(f=options['file']))
+
+        if not os.path.isfile(file_path):
+            raise CommandError("File does not exist at the specified path.")
+
         self.input_options = options
-        with open('data/lave1_lesson1.csv') as dict_file:
+        with open(file_path) as dict_file:
             csv_data = csv.DictReader(dict_file)
             for row in csv_data:
                 row['translate'] = row['translate'].decode('utf-8')
