@@ -1,5 +1,4 @@
 *.pyc
 .idea
 .env
-migrations
 settings_local.*
