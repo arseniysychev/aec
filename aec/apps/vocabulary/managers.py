@@ -5,7 +5,6 @@ from django.db import models
 
 class CustomManager(models.Manager):
     def random_item(self, ids):
-        print len(ids)
         random_item = None
         while ids and not random_item:
             random_id = random.choice(ids)
