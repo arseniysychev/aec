@@ -1,0 +1,26 @@
+
+{
+  "name": "norton_commons",
+  "authors": [
+    "develop"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/libraries/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.3",
+    "bootstrap": "~3.3.6",
+    "angular-ui-router": "~0.2.18",
+    "angular-ui-router-styles": "~1.1.0"
+  }
+}

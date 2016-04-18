@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <!-- jQuery -->
+    <script src="{% static 'libraries/jquery/dist/jquery.min.js' %}"></script>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'libraries/bootstrap/dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'libraries/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- angular -->
+    <script src="{% static 'libraries/angular/angular.min.js' %}"></script>
+    <script src="{% static 'libraries/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+    <script src="{% static 'libraries/angular-ui-router-styles/ui-router-styles.js' %}"></script>
+
+    <!-- app, routes, controllers -->
+    <script src="{% static 'app/application.js' %}"></script>
+    <script src="{% static 'app/route.js' %}"></script>
+
+    <meta charset="utf-8">
+    <title>{{ base_title }}</title>
+
+</head>
+<body ng-app="myApp" ui-router-styles>
+
+<style>
+    table#params td {
+        padding: 5px;
+        border: 1px solid black;
+    }
+</style>
+<table id="params">
+    <tr>
+        <td>$state.$current.url.source</td>
+        <td>$state.current.name</td>
+        <td>$stateParams</td>
+        <td>$root.user</td>
+    </tr>
+    <tr>
+        <td><span ng-bind="$state.$current.url.source"></span></td>
+        <td><span ng-bind="$state.current.name"></span></td>
+        <td><span ng-bind="$stateParams"></span></td>
+        <td><span ng-bind="$root.user"></span></td>
+    </tr>
+</table>
+
+
+<ul>
+    <li><a ui-sref="add">Main</a></li>
+    <li><a ui-sref="map">Map</a></li>
+</ul>
+
+<div ui-view></div>
+
+</body>
+
+</html>
