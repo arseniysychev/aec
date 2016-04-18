@@ -3,8 +3,12 @@ import csv
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from aec.apps.vocabulary.serializers import DictionarySerializer
+from aec.apps.vocabulary.models import Dictionary
+from aec.apps.library.serializers import LibrarySerializer
+from aec.apps.library.models import Library
 
 
 class Command(BaseCommand):
@@ -28,6 +32,16 @@ class Command(BaseCommand):
             dest='file',
             help='File for load to db.'
         )
+        parser.add_argument(
+            '--level',
+            dest='level',
+            help='Level for data.'
+        )
+        parser.add_argument(
+            '--lesson',
+            dest='lesson',
+            help='Lesson for data.'
+        )
 
     def print_info(self, template='', context=None):
         if self.input_options['print']:
@@ -35,6 +49,15 @@ class Command(BaseCommand):
             print str(template).format(**context)
 
     def handle(self, *args, **options):
+
+        self.input_options = options
+
+        if not options['level']:
+            raise CommandError("Option `--level=...` must be specified.")
+
+        if not options['lesson']:
+            raise CommandError("Option `--lesson=...` must be specified.")
+
         if not options['file']:
             raise CommandError("Option `--file=...` must be specified.")
 
@@ -44,16 +67,32 @@ class Command(BaseCommand):
         if not os.path.isfile(file_path):
             raise CommandError("File does not exist at the specified path.")
 
-        self.input_options = options
+        try:
+            library = Library.objects.get(level=options['level'],
+                                          lesson=options['lesson'])
+        except ObjectDoesNotExist:
+            library_serializer = LibrarySerializer(data=options)
+            if library_serializer.is_valid():
+                library_serializer.save()
+                library = Library.objects.get(pk=library_serializer.data['id'])
+            else:
+                raise CommandError(library_serializer.errors)
+
         with open(file_path) as dict_file:
             csv_data = csv.DictReader(dict_file)
             for row in csv_data:
-                row['translate'] = row['translate'].decode('utf-8')
-                vocabulary_item = DictionarySerializer(data=row)
-                if vocabulary_item.is_valid():
-                    vocabulary_item.save()
-                    self.print_info('{word}', row)
-                else:
-                    self.print_info('word - {word}\nerror - {error}', dict(
-                        word=row['word'],
-                        error=vocabulary_item.errors))
+                self.print_info('{word}', row)
+                try:
+                    vocabulary = Dictionary.objects.get(word=row['word'])
+                    vocabulary.library.add(library)
+                    vocabulary.save()
+                except ObjectDoesNotExist:
+                    row['translate'] = row['translate'].decode('utf-8')
+                    row['library'] = [library.id, ]
+                    vocabulary_serializer = DictionarySerializer(data=row)
+                    if vocabulary_serializer.is_valid():
+                        vocabulary_serializer.save()
+                    else:
+                        self.print_info('error - {error}', dict(
+                            word=row['word'],
+                            error=vocabulary_serializer.errors))
