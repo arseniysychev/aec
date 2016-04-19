@@ -3,6 +3,7 @@
     <h2 class="text-center">
         <span class="label label-default" ng-bind="word.translate"></span>
     </h2>
+
     <form name="translateForm">
         <div class="input-group"
              ng-class="{'has-error': translateForm.input_word.$dirty && translateForm.input_word.$invalid, 'has-success': translateForm.input_word.$touched && translateForm.input_word.$valid}">
@@ -10,7 +11,8 @@
                    ng-model="input_word"
                    name="input_word"
                    placeholder="Translate"
-                   equal="word.word">
+                   equal="word.word"
+                   autocomplete="off">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
                         popover-trigger="outsideClick"
@@ -31,7 +33,8 @@
                    ng-model="input_antonym"
                    name="input_antonym"
                    placeholder="Antonym"
-                   equal="word.antonym">
+                   equal="word.antonym"
+                    autocomplete="off">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
                         popover-trigger="outsideClick"
