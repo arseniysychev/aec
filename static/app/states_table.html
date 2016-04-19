@@ -1,0 +1,23 @@
+<style>
+    table#params {
+        width: 100%;
+    }
+    table#params td {
+        padding: 5px;
+        border: 1px solid black;
+    }
+</style>
+<table id="params">
+    <tr>
+        <td>$state.$current.url.source</td>
+        <td>$state.current.name</td>
+        <td>$stateParams</td>
+        <td>$root.user</td>
+    </tr>
+    <tr>
+        <td><span ng-bind="$state.$current.url.source"></span></td>
+        <td><span ng-bind="$state.current.name"></span></td>
+        <td><span ng-bind="$stateParams"></span></td>
+        <td><span ng-bind="$root.user"></span></td>
+    </tr>
+</table>

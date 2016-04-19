@@ -1,0 +1,37 @@
+<div>
+    <table st-table="rowCollection" class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                Action
+            </th>
+            <th>
+                Word
+            </th>
+            <th>
+                Translate
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vocabulary">
+            <td><span class="glyphicon glyphicon-volume-up"
+                      aria-hidden="true"></span></td>
+            <td>{{ item.word }}</td>
+            <td>{{ item.translate }}</td>
+            <td>
+                <ul>
+                    <li ng-repeat="lib in item.library">
+                        {{ libraries[lib].level }} -
+                        {{ libraries[lib].lesson }}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+
+    </div>
+</div>

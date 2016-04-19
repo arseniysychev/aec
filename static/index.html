@@ -15,46 +15,58 @@
     <script src="{% static 'libraries/angular/angular.min.js' %}"></script>
     <script src="{% static 'libraries/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
     <script src="{% static 'libraries/angular-ui-router-styles/ui-router-styles.js' %}"></script>
+    <script src="{% static 'libraries/angular-smart-table/dist/smart-table.min.js' %}"></script>
+    <!-- ui-bootstrap -->
+    <script src="{% static 'libraries/angular-bootstrap/ui-bootstrap.min.js' %}"></script>
+    <script src="{% static 'libraries/angular-bootstrap/ui-bootstrap-tpls.min.js' %}"></script>
+
+    <!-- rest angular -->
+    <script src="{% static 'libraries/underscore/underscore-min.js' %}"></script>
+    <script src="{% static 'libraries/restangular/dist/restangular.min.js' %}"></script>
 
     <!-- app, routes, controllers -->
     <script src="{% static 'app/application.js' %}"></script>
     <script src="{% static 'app/route.js' %}"></script>
+    <script src="{% static 'app/word/list/controller.js' %}"></script>
+    <script src="{% static 'app/word/learn/controller.js' %}"></script>
 
     <meta charset="utf-8">
     <title>{{ base_title }}</title>
 
 </head>
 <body ng-app="myApp" ui-router-styles>
+<div class="container">
+    <div ng-include="'static/app/states_table.html'"></div>
 
-<style>
-    table#params td {
-        padding: 5px;
-        border: 1px solid black;
-    }
-</style>
-<table id="params">
-    <tr>
-        <td>$state.$current.url.source</td>
-        <td>$state.current.name</td>
-        <td>$stateParams</td>
-        <td>$root.user</td>
-    </tr>
-    <tr>
-        <td><span ng-bind="$state.$current.url.source"></span></td>
-        <td><span ng-bind="$state.current.name"></span></td>
-        <td><span ng-bind="$stateParams"></span></td>
-        <td><span ng-bind="$root.user"></span></td>
-    </tr>
-</table>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ui-sref="main">Learn AEC</a>
+            </div>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse"
+                 id="bs-example-navbar-collapse-1">
 
-<ul>
-    <li><a ui-sref="vocabulary">Main</a></li>
-    <li><a ui-sref="map">Map</a></li>
-</ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ui-sref="main">Main</a></li>
+                    <li><a ui-sref="vocabulary.list">List</a></li>
+                    <li><a ui-sref="vocabulary.learn">Learn</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div ui-view></div>
-
+    <div ui-view></div>
+</div>
 </body>
 
 </html>

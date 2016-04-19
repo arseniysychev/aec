@@ -1,7 +1,9 @@
 var app = angular.module('myApp', [
     'ui.router',
     'uiRouterStyles',
-    'module_map'
+    'smart-table',
+    'listModule',
+    'learnModule'
 ]);
 
 
@@ -40,7 +42,7 @@ app.service('SessionService', [
                 if ($sessionStorage.user) {
 
                 } else {
-                    $scope.$state.go('auth.login');
+                    $scope.$state.go('main');
                 }
             }
         };

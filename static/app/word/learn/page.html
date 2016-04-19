@@ -1,37 +1,60 @@
 <div>
-    <table st-table="rowCollection" class="table table-striped">
-        <thead>
-        <tr>
-            <th>
-                Action
-            </th>
-            <th>
-                Word
-            </th>
-            <th>
-                Translate
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in vocabulary">
-            <td><span class="glyphicon glyphicon-volume-up"
-                      aria-hidden="true"></span></td>
-            <td>{{ item.word }}</td>
-            <td>{{ item.translate }}</td>
-            <td>
-                <ul>
-                    <li ng-repeat="lib in item.library">
-                        {{ libraries[lib].level }} -
-                        {{ libraries[lib].lesson }}
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 
-    <div>
+    <h2 class="text-center">
+        <span class="label label-default" ng-bind="word.translate"></span>
+    </h2>
+    <form name="translateForm">
+        <div class="input-group"
+             ng-class="{'has-error': translateForm.input_word.$dirty && translateForm.input_word.$invalid, 'has-success': translateForm.input_word.$touched && translateForm.input_word.$valid}">
+            <input type="text" class="form-control"
+                   ng-model="input_word"
+                   name="input_word"
+                   placeholder="Translate"
+                   equal="word.word">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        popover-trigger="outsideClick"
+                        uib-popover="{{ word.word }}">
+                    <span class="glyphicon glyphicon-eye-open"
+                          aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-volume-up"
+                          aria-hidden="true"></span>
+                </button>
+            </span>
+        </div>
 
-    </div>
+        <div class="input-group"
+             ng-class="{'has-error': translateForm.input_antonym.$dirty && translateForm.input_antonym.$invalid, 'has-success': translateForm.input_antonym.$touched && translateForm.input_antonym.$valid}">
+            <input type="text" class="form-control"
+                   ng-model="input_antonym"
+                   name="input_antonym"
+                   placeholder="Antonym"
+                   equal="word.antonym">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        popover-trigger="outsideClick"
+                        uib-popover="{{ word.antonym }}">
+                    <span class="glyphicon glyphicon-eye-open"
+                          aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-volume-up"
+                          aria-hidden="true"></span>
+                </button>
+            </span>
+
+        </div>
+        <div class="text-center">
+            <button ng-disabled="translateForm.input_word.$invalid"
+                    ng-click="getRandomWord(translateForm)" class="btn btn-primary">Next
+                word
+            </button>
+        </div>
+    </form>
+
+    <button type='reset' class="btn btn-default">
+        Mouseenter
+    </button>
 </div>

@@ -1,4 +1,4 @@
-var app_path = '/app/';
+var app_path = 'static/app/';
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -13,22 +13,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 'noLogin': true
             }
         })
-        .state('map', {
-            url: "/map",
-            templateUrl: app_path.concat('map/map.html'),
-            controller: 'MainController',
-            data: {
-                css: app_path.concat('map/map.css')
-            }
-        })
         .state('vocabulary', {
             abstract: true,
             // url: "/auth",
             template: "<ui-view/>"
         })
-        .state('vocabulary.view', {
-            url: "/login",
-            templateUrl: app_path.concat('/auth/login.html'),
+        .state('vocabulary.list', {
+            url: "/list",
+            templateUrl: app_path.concat('word/list/page.html'),
+            controller: 'ListController',
+            data: {
+                'noLogin': true
+            }
+        })
+        .state('vocabulary.learn', {
+            url: "/learn",
+            templateUrl: app_path.concat('word/learn/page.html'),
+            controller: 'LearnController',
             data: {
                 'noLogin': true
             }
