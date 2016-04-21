@@ -1,8 +1,13 @@
 var listModule = angular.module('listModule', [
-    'restangular'
+    'restangular',
+    'utils'
 ]);
 
-listModule.controller('ListController', function ($scope, Restangular) {
+listModule.controller('ListController', function ($scope, Restangular, UtilsService) {
+
+    $scope.wordVoice = function (word) {
+        UtilsService.textToSpeech(word.word);
+    };
 
     var words = Restangular.all('api/vocabulary/');
     $scope.getVocabulary = function () {

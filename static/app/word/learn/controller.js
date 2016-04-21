@@ -1,6 +1,7 @@
 var learnModule = angular.module('learnModule', [
     'ui.bootstrap',
-    'restangular'
+    'restangular',
+    'utils'
 ]);
 
 learnModule.directive('equal', function () {
@@ -27,9 +28,13 @@ String.prototype.trimLeft = function (charlist) {
     return this.replace(new RegExp("^[" + charlist + "]+"), "");
 };
 
-learnModule.controller('LearnController', function ($scope, Restangular) {
+learnModule.controller('LearnController', function ($scope, Restangular, UtilsService) {
 
     var words = Restangular.all('api/vocabulary');
+
+    $scope.wordVoice = function (word) {
+        UtilsService.textToSpeech(word.word);
+    };
 
     $scope.successForm = function () {
         var query_params = {};

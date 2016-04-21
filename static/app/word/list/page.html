@@ -22,8 +22,13 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in vocabulary">
-            <td><span class="glyphicon glyphicon-volume-up"
-                      aria-hidden="true"></span></td>
+            <td>
+                <button class="btn btn-default btn-xs"
+                        ng-click="wordVoice(item)">
+                    <span class="glyphicon glyphicon-volume-up"
+                          aria-hidden="true"></span>
+                </button>
+            </td>
             <td>{{ item.word }}</td>
             <td>{{ item.translate }}</td>
             <td>
