@@ -4,17 +4,16 @@ var listModule = angular.module('listModule', [
 
 listModule.controller('ListController', function ($scope, Restangular) {
 
-    var libraries = Restangular.all('api/library');
-    libraries.getList().then(function (result) {
-        $scope.libraries = {};
-        for (var lib = 0; lib < result.length; lib++) {
-            $scope.libraries[result[lib].id] = result[lib]
-        }
-    });
+    var words = Restangular.all('api/vocabulary/');
+    $scope.getVocabulary = function () {
+        var query_params = {
+            lib: $scope.settings.checkedLibraries
+        };
+        words.getList(query_params).then(function (result) {
+            $scope.vocabulary = result;
+        });
+    };
 
-    var words = Restangular.all('api/vocabulary');
-    words.getList().then(function (result) {
-        $scope.vocabulary = result;
-    });
+    $scope.getVocabulary();
 
 });

@@ -2,6 +2,7 @@ var app = angular.module('myApp', [
     'ui.router',
     'uiRouterStyles',
     'smart-table',
+    'vocabularyModule',
     'listModule',
     'learnModule'
 ]);

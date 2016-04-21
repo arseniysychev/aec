@@ -8,8 +8,10 @@ learnModule.directive('equal', function () {
         require: 'ngModel',
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function (modelValue, viewValue) {
-                if (scope.$eval(attrs.equal)) {
-                    if (scope.$eval(attrs.equal) == viewValue) {
+                var answer = scope.$eval(attrs.equal);
+                if (answer && answer.length > 0) {
+                    var answerList = [answer, answer.trimLeft(), answer.trimLeft('to '), answer.trimLeft('(to) ')];
+                    if (answerList.indexOf(viewValue) != -1) {
                         return true
                     }
                 }
@@ -19,23 +21,6 @@ learnModule.directive('equal', function () {
     };
 });
 
-learnModule.directive('customPopover', function () {
-    return {
-        restrict: 'A',
-        template: '<span>{{label}}</span>',
-        link: function (scope, el, attrs) {
-            scope.label = attrs.popoverLabel;
-            $(el).popover({
-                trigger: 'click',
-                html: true,
-                content: attrs.popoverHtml,
-                placement: attrs.popoverPlacement
-            });
-        }
-    };
-});
-
-
 String.prototype.trimLeft = function (charlist) {
     if (charlist === undefined)
         charlist = "\s";
@@ -44,28 +29,40 @@ String.prototype.trimLeft = function (charlist) {
 
 learnModule.controller('LearnController', function ($scope, Restangular) {
 
-    Restangular.all('api/library').getList().then(function (result) {
-        $scope.libraries = {};
-        for (var lib = 0; lib < result.length; lib++) {
-            $scope.libraries[result[lib].id] = result[lib]
-        }
-    });
-
     var words = Restangular.all('api/vocabulary');
 
-    $scope.getRandomWord = function (form) {
-
-        if (form) {
-            $scope.input_word = null;
-            $scope.input_antonym = null;
-            form.input_word.$setPristine();
-            form.input_antonym.$setPristine();
+    $scope.successForm = function () {
+        var query_params = {};
+        if ($scope.word && !$scope.word.help) {
+            query_params.id = $scope.word.id;
         }
 
-        words.one('random').get().then(
+        $scope.getRandomWord(query_params);
+    };
+
+    $scope.getRandomWord = function (add_query_params) {
+
+        var query_params = {
+            lib: $scope.settings.checkedLibraries
+        };
+
+        if ($scope.translateForm) {
+            $scope.input_word = null;
+            $scope.input_antonym = null;
+            $scope.translateForm.input_word.$setPristine();
+            $scope.translateForm.input_antonym.$setPristine();
+        }
+
+        if (add_query_params) {
+            angular.forEach(add_query_params, function (value, key) {
+                query_params[key] = value;
+            });
+        }
+
+        words.one('random/').get(query_params).then(
             function (result) {
                 $scope.word = result;
-                $scope.word.english = result.word.trimLeft('to ');
+                $scope.word.help = false;
             }
         );
     };

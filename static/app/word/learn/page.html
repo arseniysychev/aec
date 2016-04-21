@@ -16,6 +16,7 @@
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
                         popover-trigger="outsideClick"
+                        ng-click="word.help = true"
                         uib-popover="{{ word.word }}">
                     <span class="glyphicon glyphicon-eye-open"
                           aria-hidden="true"></span>
@@ -34,10 +35,11 @@
                    name="input_antonym"
                    placeholder="Antonym"
                    equal="word.antonym"
-                    autocomplete="off">
+                   autocomplete="off">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
                         popover-trigger="outsideClick"
+                        ng-click="word.help = true"
                         uib-popover="{{ word.antonym }}">
                     <span class="glyphicon glyphicon-eye-open"
                           aria-hidden="true"></span>
@@ -51,10 +53,16 @@
         </div>
         <div class="text-center">
             <button ng-disabled="translateForm.input_word.$invalid"
-                    ng-click="getRandomWord(translateForm)"
-                    class="btn btn-primary">
+                    ng-click="successForm()"
+                    class="btn btn-success">
                 Next word
+            </button>
+            <button ng-click="getRandomWord()"
+                    class="btn btn-danger">
+                Less word
             </button>
         </div>
     </form>
+
+
 </div>

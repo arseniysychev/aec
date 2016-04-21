@@ -1,0 +1,35 @@
+<nav class="navbar">
+    <div class="container-fluid">
+        <ul class="nav nav-tabs navbar-right">
+            <li>
+                <a ng-click="settings.filterLibraryShow = !settings.filterLibraryShow">Filter</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<ul ng-show="settings.filterLibraryShow" class="list-group">
+    <li ng-repeat="level in levels"
+        class="list-group-item">
+        <h5>
+            <span ng-show="!level.show"
+                  class="glyphicon glyphicon-menu-down btn btn-default btn-xs"
+                  aria-hidden="true" ng-click="level.show=!level.show"></span>
+            <span ng-show="level.show"
+                  class="glyphicon glyphicon-menu-up btn btn-default btn-xs"
+                  aria-hidden="true" ng-click="level.show=!level.show"></span>
+            <span>Level {{ level.level }}</span>
+        </h5>
+        <ul ng-show="level.show" class="list-group">
+            <li ng-repeat="lib in level.lib | orderBy:'lesson'"
+                class="list-group-item form-group">
+                <input id="{{ lib.id }}" type="checkbox"
+                       ng-model="checkBoxLib[lib.id]"
+                       ng-change="checkedLevelsChange(lib.id)">
+                <label for="{{ lib.id }}">Lesson {{ lib.lesson }}</label>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<div ui-view></div>

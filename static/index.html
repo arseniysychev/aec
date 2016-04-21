@@ -27,6 +27,7 @@
     <!-- app, routes, controllers -->
     <script src="{% static 'app/application.js' %}"></script>
     <script src="{% static 'app/route.js' %}"></script>
+    <script src="{% static 'app/word/controller.js' %}"></script>
     <script src="{% static 'app/word/list/controller.js' %}"></script>
     <script src="{% static 'app/word/learn/controller.js' %}"></script>
 
@@ -36,7 +37,7 @@
 </head>
 <body ng-app="myApp" ui-router-styles>
 <div class="container">
-    <div ng-include="'static/app/states_table.html'"></div>
+    <!-- <div ng-include="'static/app/states_table.html'"></div> -->
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
