@@ -81,9 +81,11 @@ class Command(BaseCommand):
         with open(file_path) as dict_file:
             csv_data = csv.DictReader(dict_file)
             for row in csv_data:
-                self.print_info('{word}', row)
+                row['word'] = row['word'].lower()
+                self.print_info('***\n{word}', row)
                 try:
                     vocabulary = Dictionary.objects.get(word=row['word'])
+                    self.print_info('{word} - lexicon already exist', row)
                     vocabulary.library.add(library)
                     vocabulary.save()
                 except ObjectDoesNotExist:
