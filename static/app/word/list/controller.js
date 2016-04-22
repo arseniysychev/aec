@@ -1,9 +1,12 @@
 var listModule = angular.module('listModule', [
+    'smart-table',
     'restangular',
     'utils'
 ]);
 
 listModule.controller('ListController', function ($scope, Restangular, UtilsService) {
+
+    $scope.displayedCollection = [];
 
     $scope.wordVoice = function (word) {
         UtilsService.textToSpeech(word.word);
