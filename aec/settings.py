@@ -127,12 +127,12 @@ TEMPLATES[0]['DIRS'] += [
 #     'project.context_processors.processors.base_info',
 # ]
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join('static'),
+    
 ]
 
 MEDIA_URL = '/media/'
