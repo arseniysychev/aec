@@ -3,11 +3,11 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
 
 from .serializers import DictionarySerializer
-from .models import Dictionary
+from .models import Word
 
 
 class VocabularyViewSet(viewsets.ViewSet):
-    queryset = Dictionary.objects.all()
+    queryset = Word.objects.all()
 
     def initial(self, request, *args, **kwargs):
         super(VocabularyViewSet, self).initial(request, *args, **kwargs)
@@ -37,7 +37,7 @@ class VocabularyViewSet(viewsets.ViewSet):
             )
 
         ids = self.queryset.values_list('id', flat=True)
-        random_item = Dictionary.objects.random_item(ids)
+        random_item = Word.objects.random_item(ids)
         if random_item:
             serializer = DictionarySerializer(random_item)
             return Response(serializer.data)

@@ -33,7 +33,10 @@ learnModule.controller('LearnController', function ($scope, Restangular, UtilsSe
     var words = Restangular.all('api/vocabulary');
 
     $scope.wordVoice = function (word) {
-        UtilsService.textToSpeech(word.word);
+        if ($scope.translateForm.input_word.$invalid) {
+            word.help = true;
+        }
+        UtilsService.textToSpeech(word.english);
     };
 
     $scope.successForm = function () {

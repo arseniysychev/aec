@@ -11,17 +11,18 @@
                    ng-model="input_word"
                    name="input_word"
                    placeholder="Translate"
-                   equal="word.word"
+                   equal="word.english"
                    autocomplete="off">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"
                         popover-trigger="outsideClick"
                         ng-click="word.help = true"
-                        uib-popover="{{ word.word }}">
+                        uib-popover="{{ word.english }}">
                     <span class="glyphicon glyphicon-eye-open"
                           aria-hidden="true"></span>
                 </button>
-                <button class="btn btn-default" type="button" ng-click="wordVoice(word)">
+                <button class="btn btn-default" type="button"
+                        ng-click="wordVoice(word)">
                     <span class="glyphicon glyphicon-volume-up"
                           aria-hidden="true"></span>
                 </button>
@@ -29,6 +30,7 @@
         </div>
 
         <div class="input-group"
+             ng-show="word.antonym && word.antonym.length > 0"
              ng-class="{'has-error': translateForm.input_antonym.$dirty && translateForm.input_antonym.$invalid, 'has-success': translateForm.input_antonym.$touched && translateForm.input_antonym.$valid}">
             <input type="text" class="form-control"
                    ng-model="input_antonym"
@@ -49,7 +51,6 @@
                           aria-hidden="true"></span>
                 </button>
             </span>
-
         </div>
         <div class="text-center">
             <button ng-disabled="translateForm.input_word.$invalid"

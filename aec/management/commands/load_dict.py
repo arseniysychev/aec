@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from aec.apps.vocabulary.serializers import DictionarySerializer
-from aec.apps.vocabulary.models import Dictionary
+from aec.apps.vocabulary.models import Word
 from aec.apps.library.serializers import LibrarySerializer
 from aec.apps.library.models import Library
 
@@ -81,11 +81,11 @@ class Command(BaseCommand):
         with open(file_path) as dict_file:
             csv_data = csv.DictReader(dict_file)
             for row in csv_data:
-                row['word'] = row['word'].lower()
-                self.print_info('***\n{word}', row)
+                row['english'] = row['english'].lower()
+                self.print_info('***\n{english}', row)
                 try:
-                    vocabulary = Dictionary.objects.get(word=row['word'])
-                    self.print_info('{word} - lexicon already exist', row)
+                    vocabulary = Word.objects.get(english=row['english'])
+                    self.print_info('{english} - lexicon already exist', row)
                     vocabulary.library.add(library)
                     vocabulary.save()
                 except ObjectDoesNotExist:
@@ -96,5 +96,5 @@ class Command(BaseCommand):
                         vocabulary_serializer.save()
                     else:
                         self.print_info('error - {error}', dict(
-                            word=row['word'],
+                            word=row['english'],
                             error=vocabulary_serializer.errors))

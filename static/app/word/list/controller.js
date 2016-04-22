@@ -9,7 +9,7 @@ listModule.controller('ListController', function ($scope, Restangular, UtilsServ
     $scope.displayedCollection = [];
 
     $scope.wordVoice = function (word) {
-        UtilsService.textToSpeech(word.word);
+        UtilsService.textToSpeech(word.english);
     };
 
     var words = Restangular.all('api/vocabulary/');

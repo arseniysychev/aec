@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from aec.apps.vocabulary.models import Dictionary
+from aec.apps.vocabulary.models import Word
 
 
 class DictionarySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Dictionary
+        model = Word
         fields = '__all__'
