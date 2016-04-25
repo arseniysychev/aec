@@ -1,5 +1,6 @@
 Django==1.9.5
 argparse==1.2.1
+dj-database-url==0.4.1
 django-rest==0.0.1
 djangorestframework==3.3.3
 gTTS-token==1.0.1
