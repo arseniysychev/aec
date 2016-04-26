@@ -21,3 +21,10 @@ class Library(models.Model):
 
     class Meta:
         unique_together = ("level", "lesson")
+
+    def __str__(self):
+        return '{level}({name}) lesson - {lesson}'.format(
+            level=self.level,
+            name=self.get_level_display(),
+            lesson=self.lesson
+        )

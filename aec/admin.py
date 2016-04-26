@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from aec.apps.library.models import Library
+from aec.apps.vocabulary.models import Word
+
+admin.site.register(Library)
+admin.site.register(Word)

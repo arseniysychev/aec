@@ -14,3 +14,9 @@ class Word(models.Model):
     library = models.ManyToManyField(Library, blank=True)
 
     objects = CustomManager()
+
+    def __str__(self):
+        return '{en} - {translate}'.format(
+            en=self.english,
+            translate=self.translate
+        )
