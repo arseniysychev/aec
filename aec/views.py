@@ -12,7 +12,7 @@ def load_dicts(request):
     lesson = request.GET.get('lesson')
     if level and lesson:
         call_command(
-            'load_dict',
+            name='load_data',
             file='{level}-{lesson}.csv'.format(lesson=lesson, level=level),
             level=level,
             lesson=lesson
